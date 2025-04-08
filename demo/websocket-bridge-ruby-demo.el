@@ -47,12 +47,10 @@
   (ruby-demo-start)
   (websocket-bridge-app-open-buffer "ruby-demo"))
 
-(websocket-bridge-call "ruby-demo" "message" "Hello")
-
-(websocket-bridge-call "ruby-demo" "value" "Hello")
-
 (websocket-bridge-call "ruby-demo" "runInEmacs" "Hello")
 
+(defun ruby-demo-print (&rest args)
+  (print args))
 
 (provide 'websocket-bridge-ruby-demo)
 ;;; websocket-bridge-ruby-demo.el ends here

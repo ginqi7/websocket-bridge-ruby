@@ -50,8 +50,33 @@ module WebsocketBridge
       @ws.send(json)
     end
 
+    def value_format(value)
+      case value
+      when String
+        "\"#{value}\""
+      when Integer
+        value.to_s
+      when Float
+        value.to_s
+      when Array
+        args = value.map { |one| value_format(one) }.join(' ')
+        "(list #{args})"
+      when Hash
+        args = value.map { |key, v| ":#{key} #{value_format(v)}" }.join(' ')
+        "(list #{args})"
+      when Symbol
+        ''
+      when TrueClass
+        't'
+      when FalseClass
+        'nil'
+      else
+        puts "The value is of an unknown type: #{value.class}."
+      end
+    end
+
     def run_in_emacs(func, *args)
-      args_str = args.map { |arg| "\"#{arg}\"" }.join(' ')
+      args_str = args.map { |arg| value_format(arg) }.join(' ')
       eval_in_emacs("(#{func} #{args_str})")
     end
   end
