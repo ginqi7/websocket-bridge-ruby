@@ -1,7 +1,7 @@
 require 'eventmachine'
-require_relative 'websocket_bridge'
+require_relative '../lib/websocket_bridge'
 
-class WebsocketBridgeDemo < WebsocketBridge
+class WebsocketBridgeDemo < WebsocketBridge::Base
   def on_message(data)
     puts data
     eval_in_emacs('(message "Hello")')
